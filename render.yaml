@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: binarium-screenshot-analyzer
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      - key: PUBLIC_BASE_URL
+        sync: false
+      - key: WEBHOOK_SECRET
+        generateValue: true
+      - key: MAX_IMAGE_MB
+        value: "10"
+      - key: USER_COOLDOWN_SECONDS
+        value: "15"
+      - key: MAX_DAILY_USER_REQUESTS
+        value: "30"
